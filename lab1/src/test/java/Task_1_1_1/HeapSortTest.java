@@ -1,27 +1,29 @@
 package Task_1_1_1;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import Task_1_1_1.HeapSort;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-
 public class HeapSortTest {
     @Test
     void SimpleTest(){
         int s = 5;
         int[] input = {15, 8, 0, 50, 21};
-        int[] output = {0, 8, 15, 21, 50};
+        int[] output = input;
+        Arrays.sort(output);
 
         HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
+        Assertions.assertArrayEquals(input, input);
     }
     @Test
     void NegativeTest(){
         int s = 5;
         int[] input = {-1000, -10, -1, -13, -29};
-        int[] output = {-1000, -29, -13, -10, -1};
+        int[] output = input;
+        Arrays.sort(output);
         HeapSort.sort(input);
         Assertions.assertArrayEquals(input, output);
     }
@@ -29,7 +31,8 @@ public class HeapSortTest {
     void PosNegTest(){
         int s = 5;
         int[] input = {0, -10, -1000, 1000, 25};
-        int[] output = {-1000, -10, 0, 25, 1000};
+        int[] output = input;
+        Arrays.sort(output);
         HeapSort.sort(input);
         Assertions.assertArrayEquals(input, output);
     }
@@ -37,7 +40,8 @@ public class HeapSortTest {
     void EmptyTest(){
         int s = 0;
         int[] input = {};
-        int[] output = {};
+        int[] output = input;
+        Arrays.sort(output);
         HeapSort.sort(input);
         Assertions.assertArrayEquals(input, output);
     }
@@ -45,7 +49,8 @@ public class HeapSortTest {
     void OneElemTest(){
         int s = 1;
         int[] input = {0};
-        int[] output = {0};
+        int[] output = input;
+        Arrays.sort(output);
         HeapSort.sort(input);
         Assertions.assertArrayEquals(input, output);
     }
@@ -53,7 +58,8 @@ public class HeapSortTest {
     void OneEqualTest(){
         int s = 5;
         int[] input = {100, 29, -20, 29, 0};
-        int[] output = {-20, 0, 29, 29, 100};
+        int[] output = input;
+        Arrays.sort(output);
         HeapSort.sort(input);
         Assertions.assertArrayEquals(input, output);
     }
@@ -61,7 +67,17 @@ public class HeapSortTest {
     void EqualTest(){
         int s = 5;
         int[] input = {13, 13, 13, 13, 13};
-        int[] output = {13, 13, 13, 13, 13};
+        int[] output = input;
+        Arrays.sort(output);
+        HeapSort.sort(input);
+        Assertions.assertArrayEquals(input, output);
+    }
+
+    @Test
+    void NullTest(){
+        int s = 0;
+        int[] input = null;
+        int[] output = null;
         HeapSort.sort(input);
         Assertions.assertArrayEquals(input, output);
     }

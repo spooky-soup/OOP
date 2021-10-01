@@ -1,12 +1,12 @@
 package Task_1_1_1;
 
 public class HeapSort {
-//    int[] heap;
-//    public HeapSort(int s) {
-//        this.heap = new int[s];
-//    }
+    /**
+     * function, sorting an integer array
+     * @param arr - array to be sorted
+     */
     public static void sort(int[] arr) {
-
+        if (arr == null) return;
         int size = arr.length;
 
         for (int i = size / 2 - 1; i >= 0; i--)
@@ -21,7 +21,13 @@ public class HeapSort {
         }
     }
 
-    public static void heapify(int[] arr, int size, int i) {
+    /**
+     * Converts an array to a binary heap with root i
+     * @param arr - array, representing heap
+     * @param size - number of elements in heap array
+     * @param i - index of root node
+     */
+    private static void heapify(int[] arr, int size, int i) {
         int max = i;
         int l = 2 * i + 1;
         int r = 2 * i + 2;
