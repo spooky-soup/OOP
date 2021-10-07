@@ -1,84 +1,45 @@
 package Task_1_1_1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import Task_1_1_1.HeapSort;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HeapSortTest {
-    @Test
-    void SimpleTest(){
-        int s = 5;
-        int[] input = {15, 8, 0, 50, 21};
-        int[] output = input;
-        Arrays.sort(output);
 
-        HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, input);
+    static ArrayList<int[]> testData() {
+        var list = new ArrayList<int[]>();
+
+        list.add(new int[] {15, 8, 0, 50, 21}); //simple test
+        list.add(new int[] {0, 0, 0, 0, 0}); //zeros + same values
+        list.add(new int[] {-1000, -10, -1, -13, -29}); //negative
+        list.add(new int[] {0, -10, -1000, 1000, 25}); //pos + neg
+        list.add(new int[] {}); //empty
+        list.add(new int[] {0}); //1 value
+        list.add(new int[] {100, 29, -20, 29, 0}); //2 same values
+        list.add(new int[] {13, 13, 13, 13, 13}); //all the same
+        list.add(new int[] {Integer.MAX_VALUE, Integer.MIN_VALUE});
+
+        return list;
     }
-    @Test
-    void NegativeTest(){
-        int s = 5;
-        int[] input = {-1000, -10, -1, -13, -29};
-        int[] output = input;
+    @ParameterizedTest
+    @MethodSource("testData")
+    public static void testsHeapSort(int[] input) {
+        int[] output = input.clone();
         Arrays.sort(output);
         HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
-    }
-    @Test
-    void PosNegTest(){
-        int s = 5;
-        int[] input = {0, -10, -1000, 1000, 25};
-        int[] output = input;
-        Arrays.sort(output);
-        HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
-    }
-    @Test
-    void EmptyTest(){
-        int s = 0;
-        int[] input = {};
-        int[] output = input;
-        Arrays.sort(output);
-        HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
-    }
-    @Test
-    void OneElemTest(){
-        int s = 1;
-        int[] input = {0};
-        int[] output = input;
-        Arrays.sort(output);
-        HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
-    }
-    @Test
-    void OneEqualTest(){
-        int s = 5;
-        int[] input = {100, 29, -20, 29, 0};
-        int[] output = input;
-        Arrays.sort(output);
-        HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
-    }
-    @Test
-    void EqualTest(){
-        int s = 5;
-        int[] input = {13, 13, 13, 13, 13};
-        int[] output = input;
-        Arrays.sort(output);
-        HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
+        assertArrayEquals(output, input);
     }
 
-    @Test
-    void NullTest(){
-        int s = 0;
-        int[] input = null;
-        int[] output = null;
-        HeapSort.sort(input);
-        Assertions.assertArrayEquals(input, output);
+    @ParameterizedTest
+    @NullSource
+    public static void nullTest(int[] input) {
+        assertThrows(IllegalArgumentException.class, ()->HeapSort.sort(input));
     }
+
 }
