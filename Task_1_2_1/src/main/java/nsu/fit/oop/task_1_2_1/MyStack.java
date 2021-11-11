@@ -1,17 +1,11 @@
 package nsu.fit.oop.task_1_2_1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MyStack<T>{
     private T[] stackArray = (T[])new Object[10];
-    private int size = 10;
     private int last = -1;
-
-    /*public MyStack() {
-        this.size = size;
-        stackArray = (T[]) new Object[size];
-        last = -1;
-    }*/
 
     private boolean isEmpty() {
         return last == -1;
@@ -21,10 +15,9 @@ public class MyStack<T>{
     }
 
     public void push(T var) {
-        if (this.last >= size-1)
+        if (this.last >= stackArray.length-1)
         {
-            size = 2*size;
-            stackArray = Arrays.copyOf(stackArray, size);
+            stackArray = Arrays.copyOf(stackArray, stackArray.length*2);
         }
         stackArray[++last] = var;
     }
@@ -63,4 +56,25 @@ public class MyStack<T>{
         return res;
     }
 
+    public boolean checkStackEquality(MyStack<T> stack1, MyStack<T> stack2) {
+        if (stack1.last != stack2.last)
+            return false;
+        else {
+            return Arrays.equals(stack1.stackArray, stack2.stackArray);
+        }
+    }
+
+    public static <E> MyStack<E> createStackFromArray(ArrayList<E> inputArray)
+    {
+        MyStack<E> output = new MyStack<>();
+        for (E var : inputArray) {
+            output.push(var);
+        }
+        return output;
+    }
+
+    public ArrayList<T> getArrayFromStack(MyStack<T> stack)
+    {
+        return new ArrayList<>(Arrays.asList(stack.stackArray));
+    }
 }
