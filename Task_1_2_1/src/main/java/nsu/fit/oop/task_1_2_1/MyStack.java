@@ -55,26 +55,4 @@ public class MyStack<T>{
         }
         return res;
     }
-
-    public boolean checkStackEquality(MyStack<T> stack1, MyStack<T> stack2) {
-        if (stack1.last != stack2.last)
-            return false;
-        else {
-            return Arrays.equals(stack1.stackArray, stack2.stackArray);
-        }
-    }
-
-    public static <E> MyStack<E> createStackFromArray(ArrayList<E> inputArray)
-    {
-        MyStack<E> output = new MyStack<>();
-        for (E var : inputArray) {
-            output.push(var);
-        }
-        return output;
-    }
-
-    public ArrayList<T> getArrayFromStack(MyStack<T> stack)
-    {
-        return new ArrayList<>(Arrays.asList(stack.stackArray));
-    }
 }
