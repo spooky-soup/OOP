@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static nsu.fit.oop.task_1_2_1.MyStack.createStackFromArray;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -31,6 +30,15 @@ public class MyStackTest {
         ArrayList<Integer> emptyNumericTest = new ArrayList<>(List.of());
         ArrayList<String> emptyStringTest = new ArrayList<>(List.of());
         return Stream.of(Arguments.of(emptyNumericTest), Arguments.of(emptyStringTest));
+    }
+
+    public static <E> MyStack<E> createStackFromArray(ArrayList<E> inputArray)
+    {
+        MyStack<E> output = new MyStack<>();
+        for (E var : inputArray) {
+            output.push(var);
+        }
+        return output;
     }
 
     @ParameterizedTest
