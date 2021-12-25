@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="FinderTesting" tests="4" skipped="0" failures="0" errors="0" timestamp="2021-12-25T19:22:57" hostname="DESKTOP-OC22EIC" time="0.036">
+  <properties/>
+  <testcase name="multilineTest()" classname="FinderTesting" time="0.029"/>
+  <testcase name="noSuchStringTest()" classname="FinderTesting" time="0.001"/>
+  <testcase name="englishWordTest()" classname="FinderTesting" time="0.002"/>
+  <testcase name="russianWordTest()" classname="FinderTesting" time="0.001"/>
+  <system-out><![CDATA[[14]
+[]
+[8, 13]
+[22, 31]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
