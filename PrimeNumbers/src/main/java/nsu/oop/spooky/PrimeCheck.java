@@ -1,3 +1,5 @@
+package nsu.oop.spooky;
+
 public class PrimeCheck {
     public static boolean isNotPrime(Integer n) {
         if (n == 1 || n == 2) {
