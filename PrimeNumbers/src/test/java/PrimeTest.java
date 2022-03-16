@@ -1,9 +1,16 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PrimeTest {
 
     @Test
@@ -23,22 +30,40 @@ public class PrimeTest {
     }
 
 
+    public static List<Integer> createBigArray() {
+        Integer[] arr = {6997901, 6997927, 6997937, 6997967, 6998009, 6998029, 6998039, 6998051, 6998053};
+        int len = arr.length;
+        Integer[] bigArr = new Integer[arr.length*1000];
+        int newLen = bigArr.length;
+        for (int k = 0; k < newLen; k += len) {
+            System.arraycopy(arr, 0, bigArr, k, arr.length);
+        }
+        return List.of(bigArr);
+    }
 
-    @Test
-    public void consequentTest() {
-        List<Integer> a = Arrays.asList(6997901, 6997927, 6997937, 6997967, 6998009, 6998029, 6998039, 6998051, 6998053);
+    private static Stream<Arguments> provideBigArray() {
+        return Stream.of(
+                Arguments.of(createBigArray())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideBigArray")
+    public void consequentTest(List<Integer> a) {
         Assertions.assertFalse(PrimeFind.consequentSearch(a));
     }
 
-    @Test
-    public void threadTest() {
-        List<Integer> a = Arrays.asList(6997901, 6997927, 6997937, 6997967, 6998009, 6998029, 6998039, 6998051, 6998053);
-        Assertions.assertFalse(PrimeFind.threadSearch(a, 4));
+    @ParameterizedTest
+    @MethodSource("provideBigArray")
+    public void threadTest(List<Integer> a) throws InterruptedException {
+        for (int i = 1; i <= 16; i++) {
+            Assertions.assertFalse(PrimeFind.threadSearch(a, i));
+        }
     }
 
-    @Test
-    public void parallelTest() {
-        List<Integer> a = Arrays.asList(6997901, 6997927, 6997937, 6997967, 6998009, 6998029, 6998039, 6998051, 6998053);
+    @ParameterizedTest
+    @MethodSource("provideBigArray")
+    public void parallelTest(List<Integer> a) {
         Assertions.assertFalse(PrimeFind.parallelSearch(a));
     }
 }

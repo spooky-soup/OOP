@@ -17,7 +17,7 @@ public class  PrimeFind {
         return false;
     }
 
-    public static boolean threadSearch(List<Integer> arr, int threadsNumber) {
+    public static boolean threadSearch(List<Integer> arr, int threadsNumber) throws InterruptedException {
         System.out.print("Threaded parallel process - " + threadsNumber + " threads - ");
         long startTime = System.currentTimeMillis();
         AtomicBoolean res = new AtomicBoolean(false);
@@ -35,6 +35,9 @@ public class  PrimeFind {
                 }
             });
             threads.get(i).start();
+            threads.get(i).join();
+            if (res.get()) break;
+
         }
         System.out.println(System.currentTimeMillis() - startTime + " ms;");
         return res.get();
