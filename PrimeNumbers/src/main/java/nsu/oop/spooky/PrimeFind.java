@@ -1,3 +1,4 @@
+package nsu.oop.spooky;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -27,7 +28,7 @@ public class  PrimeFind {
             threads.add(new Thread() {
                 public void run() {
                     for (int j = finalI; arr.size() > j; j = j + threadsNumber) {
-                        if (PrimeCheck.isNotPrime(arr.get(j))) {
+                        if (PrimeCheck.isNotPrime(arr.get(j)) || res.get()) {
                             res.set(true);
                             break;
                         }
@@ -35,9 +36,9 @@ public class  PrimeFind {
                 }
             });
             threads.get(i).start();
+        }
+        for (int i = 0; i < threadsNumber; i++) {
             threads.get(i).join();
-            if (res.get()) break;
-
         }
         System.out.println(System.currentTimeMillis() - startTime + " ms;");
         return res.get();
