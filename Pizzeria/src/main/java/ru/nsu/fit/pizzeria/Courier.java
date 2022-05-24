@@ -5,7 +5,7 @@ import java.util.concurrent.BlockingQueue;
 
 class Courier implements Runnable{
 
-    private final BlockingQueue<Integer> storage; //LinkedBlockingDeque()
+    private final MyBlockingQueue storage; //LinkedBlockingDeque()
     boolean isFree;
     final private int carryingTime;
     final private int capacity;
@@ -24,7 +24,7 @@ class Courier implements Runnable{
         int freeSpace = capacity;
         try {
             while (storage.size() != 0 && freeSpace != 0) {
-                int orderNumber = storage.take();
+                int orderNumber = storage.get();
                 System.out.println("[order " + orderNumber + "] - carrying");
                 carryOrders.add(orderNumber);
                 freeSpace = freeSpace - 1;

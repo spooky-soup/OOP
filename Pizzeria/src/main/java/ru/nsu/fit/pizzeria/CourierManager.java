@@ -20,7 +20,7 @@ public class CourierManager implements Runnable{
             couriers[i] = new Courier(pizzeria, /*время доставки*/ 2000, /*объем*/ 1);
         }
 
-        while (pizzeria.isOpened() || !pizzeria.orders.isEmpty()) {
+        while (pizzeria.isOpened() || pizzeria.orders.isEmpty()) {
             for (Courier courier : couriers) {
                 if (courier.isFree) {
                     couriersPool.submit(courier);
