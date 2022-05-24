@@ -3,9 +3,8 @@ package ru.nsu.fit.pizzeria;
 import java.util.concurrent.BlockingQueue;
 
 public class Baker implements Runnable{
-    final private BlockingQueue<Integer> storage;
-    final private BlockingQueue<Integer> orders;
-    //final private Pizzeria pizzeria;
+    final private MyBlockingQueue storage;
+    final private MyBlockingQueue orders;
     final private int bakeTime;
     boolean isFree;
 
@@ -20,10 +19,10 @@ public class Baker implements Runnable{
     public void run() {
         try {
             this.isFree = false;
-            int orderNumber = orders.take();
+            int orderNumber = orders.get();
             System.out.println("[order " + orderNumber + "] - baking");
             Thread.sleep(bakeTime);
-            storage.add(orderNumber);
+            storage.put(orderNumber);
             System.out.println("[order " + orderNumber + "] - baked");
             this.isFree = true;
         } catch (InterruptedException e) {

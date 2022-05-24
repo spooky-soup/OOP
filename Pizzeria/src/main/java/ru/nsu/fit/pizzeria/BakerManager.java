@@ -19,7 +19,7 @@ public class BakerManager implements Runnable {
             bakers[i] = new Baker(pizzeria, pizzeria.bakersExp.get(i));
         }
 
-        while (pizzeria.isOpened() || !pizzeria.orders.isEmpty()) {
+        while (pizzeria.isOpened() || pizzeria.orders.isEmpty()) {
             for (Baker baker : bakers) {
                 if (baker.isFree) {
                     bakersPool.submit(baker);
