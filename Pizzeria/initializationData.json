@@ -1,0 +1,17 @@
+{
+  "storageLimit": 10,
+  "ordersLimit": 10,
+  "bakersExp": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "couriersSpeed": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "couriersCapacity": 2
+}
