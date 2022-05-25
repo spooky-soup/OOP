@@ -16,8 +16,7 @@ public class CourierManager implements Runnable{
         ExecutorService couriersPool = Executors.newFixedThreadPool(couriersNum);
         Courier[] couriers = new Courier[couriersNum];
         for (int i = 0; i < couriersNum; i++) {
-            //TODO: Добавить параметры курьеров
-            couriers[i] = new Courier(pizzeria, /*время доставки*/ 2000, /*объем*/ 1);
+            couriers[i] = new Courier(pizzeria, pizzeria.couriersSpeed.get(i), pizzeria.couriersCapacity);
         }
 
         while (pizzeria.isOpened() || pizzeria.orders.isEmpty()) {
