@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CreditbookTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-12-18T01:48:55" hostname="DESKTOP-OC22EIC" time="0.03">
+  <properties/>
+  <testcase name="MyTest()" classname="CreditbookTest" time="0.026"/>
+  <testcase name="notHighAverageTest()" classname="CreditbookTest" time="0.001"/>
+  <testcase name="withRedDiploma()" classname="CreditbookTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
