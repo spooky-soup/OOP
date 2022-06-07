@@ -14,20 +14,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 import static javafx.scene.input.KeyCode.*;
 
 public class MainWindow extends Application {
-
+    static int INIT_SPEED = 400000000;
+    static int INIT_LENGTH = 3;
     static int block_size = 30;
-    public static long speed = 400000000;
     int width = 21;
     int height = 21;
-    int startLength = 10;
     Label score;
     Field field;
     VBox root;
@@ -39,7 +35,6 @@ public class MainWindow extends Application {
         root.setPadding(new Insets(10));
 
         this.field = new Field(width, height);
-        field.setSnake(new Snake(startLength, field));
 
         score = new Label("Score: 0");
         score.setFont(Font.font("tahoma", FontWeight.BOLD, FontPosture.REGULAR, 20));
@@ -48,9 +43,10 @@ public class MainWindow extends Application {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (now - timeStamp[0] > speed) {
+                if (now - timeStamp[0] > field.speed) {
                     field.update();
                     timeStamp[0] = now;
+
                     if (field.checkCollapse()) {
                         timer.stop();
                         Alert end = new Alert(Alert.AlertType.INFORMATION);
@@ -61,7 +57,7 @@ public class MainWindow extends Application {
                         end.setOnHidden(e -> {
                             root.getChildren().clear();
                             field = new Field(width, height);
-                            field.setSnake(new Snake(startLength, field));
+                            //field.setSnake(new Snake(INIT_LENGTH, field));
                             score.setText("Score: 0");
                             root.getChildren().addAll(field, score);
                             start();
