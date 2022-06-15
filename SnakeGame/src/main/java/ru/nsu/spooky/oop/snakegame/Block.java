@@ -2,8 +2,12 @@ package ru.nsu.spooky.oop.snakegame;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 public class Block extends Rectangle {
-    static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
+    public static final int UP = 0;
+    public static final int RIGHT = 1;
+    public static final int DOWN = 2;
+    public static final int LEFT = 3;
     int posX, posY;
     int prevX, prevY;
     int maxX, maxY;

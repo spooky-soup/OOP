@@ -1,7 +1,6 @@
 package ru.nsu.spooky.oop.snakegame;
 
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 
 public class Snake {

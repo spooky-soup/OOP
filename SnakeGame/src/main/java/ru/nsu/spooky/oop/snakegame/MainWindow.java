@@ -3,9 +3,12 @@ package ru.nsu.spooky.oop.snakegame;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -16,9 +19,10 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import static javafx.scene.input.KeyCode.*;
-
 public class MainWindow extends Application {
+    @FXML
+    private Button startButton;
+
     static int INIT_SPEED = 400000000;
     static int INIT_LENGTH = 3;
     static int block_size = 30;
@@ -28,68 +32,70 @@ public class MainWindow extends Application {
     Field field;
     VBox root;
     AnimationTimer timer;
+    Controller controller;
+    Stage globalStage;
+
+    public MainWindow() {
+    }
 
     @Override
     public void start(Stage stage) {
-        this.root = new VBox(10);
+        this.globalStage = stage;
+        root = new VBox(10);
         root.setPadding(new Insets(10));
 
-        this.field = new Field(width, height);
+        startButton = new Button();
+        startButton.setText("Start game");
+        startButton.setAlignment(Pos.CENTER);
+        startButton.setOnAction(event -> startGame());
 
-        score = new Label("Score: 0");
-        score.setFont(Font.font("tahoma", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        root.getChildren().add(startButton);
+        Scene startScene = new Scene(root);
+        stage.setTitle("Snake Game");
+        stage.setWidth(width*block_size+20);
+        stage.setHeight(height*block_size+100);
+        //stage.setResizable(true);
+        stage.setScene(startScene);
+        stage.show();
+    }
 
-        final long[] timeStamp = {System.nanoTime()};
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (now - timeStamp[0] > field.speed) {
-                    field.update();
-                    timeStamp[0] = now;
+    public void startGame() {
+        Stage stage = (Stage) startButton.getScene().getWindow();
+        root = new VBox();
+        root.setPadding(new Insets(10));
+        controller = new Controller(this);
+        this.field = controller.getField();
+        initScore();
+        controller.startTimer();
 
-                    if (field.checkCollapse()) {
-                        timer.stop();
-                        Alert end = new Alert(Alert.AlertType.INFORMATION);
-                        end.setHeaderText("You died...");
-                        end.setContentText("Your score: " + field.score);
-                        field.setBackground(new Background(new BackgroundFill(Color.SLATEGRAY, null, null)));
-                        Platform.runLater(end::showAndWait);
-                        end.setOnHidden(e -> {
-                            root.getChildren().clear();
-                            field = new Field(width, height);
-                            //field.setSnake(new Snake(INIT_LENGTH, field));
-                            score.setText("Score: 0");
-                            root.getChildren().addAll(field, score);
-                            start();
-                        });
-                    }
-                    score.setText("Score: " + field.score);
-                }
-            }
-        };
-        timer.start();
         root.getChildren().addAll(field, score);
 
         Scene scene = new Scene(root);
-        scene.setOnKeyPressed(e -> {
-            if (e.getCode() == UP && field.snake.getDirection() != Block.DOWN) {
-                field.snake.setDirection(Block.UP);
-            }
-            if (e.getCode() == DOWN && field.snake.getDirection() != Block.UP) {
-                field.snake.setDirection(Block.DOWN);
-            }
-            if (e.getCode() == LEFT && field.snake.getDirection() != Block.RIGHT) {
-                field.snake.setDirection(Block.LEFT);
-            }
-            if (e.getCode() == RIGHT && field.snake.getDirection() != Block.LEFT) {
-                field.snake.setDirection(Block.RIGHT);
-            }
-        });
-
+        scene.setOnKeyPressed(e -> controller.direction(e.getCode()));
         stage.setTitle("Snake Game");
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setGameOverAlert() {
+        Alert end = new Alert(Alert.AlertType.INFORMATION);
+        end.setHeaderText("You died...");
+        end.setContentText("Your score: " + field.score);
+        field.setBackground(new Background(new BackgroundFill(Color.SLATEGRAY, null, null)));
+        Platform.runLater(end::showAndWait);
+        end.setOnHidden(e -> {
+            this.root.getChildren().clear();
+            field = new Field(width, height);
+            score.setText("Score: 0");
+            this.root.getChildren().addAll(field, score);
+            start(globalStage);
+        });
+    }
+
+    private void initScore() {
+        score = new Label("Score: 0");
+        score.setFont(Font.font("tahoma", FontWeight.BOLD, FontPosture.REGULAR, 20));
     }
 
     public static void main(String[] args) {

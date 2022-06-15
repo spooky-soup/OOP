@@ -8,8 +8,8 @@ public class Field extends Pane {
 
     int height;
     int width;
-    Snake snake;
-    int score;
+    public Snake snake;
+    public int score;
     public long speed;
     ArrayList<Block> blocks = new ArrayList<>();
     Food food;
