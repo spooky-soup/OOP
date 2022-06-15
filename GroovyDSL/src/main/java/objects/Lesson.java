@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Lesson extends GroovyObjectSupport {
+public class Lesson extends GroovyConfigurable {
     private LocalDateTime date;
 }

@@ -1,6 +1,5 @@
 package objects;
 
-import groovy.lang.GroovyObjectSupport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,7 +7,7 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CurrentTask extends GroovyObjectSupport {
+public class CurrentTask extends GroovyConfigurable {
     private String id;
     private LocalDateTime deadline;
 }

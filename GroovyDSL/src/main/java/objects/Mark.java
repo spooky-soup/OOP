@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Mark extends GroovyObjectSupport {
+public class Mark extends GroovyConfigurable {
     private String name;
     private LocalDateTime date;
 }
